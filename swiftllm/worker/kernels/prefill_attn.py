@@ -99,6 +99,7 @@ def _fwd_prefill_attention(
 
     tl.store(o + offs_my_q, acc / l_i[:, None], mask=range_my_q[:, None] < my_seq_len, cache_modifier=".cg")
 
+# 这里自己写的 prefill_attention 函数使用了 Triton 来实现高效的预填充注意力计算。但是效果没有 vllm 提供的 flashattention 好
 def prefill_attention(
     q: torch.Tensor,    # [num_prefill_tokens, num_q_heads, head_dim]
     k: torch.Tensor,    # [num_prefill_tokens, num_kv_heads, head_dim]
